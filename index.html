@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Adressbuch</title>
+<link rel="stylesheet" href="style.css">
+<script src="script.js"></script>
+</head>
+<body onload="loadAddresses()">
+  <header>
+    <h1>Adressbuch</h1>
+    <small id="status">lade…</small>
+  </header>
+
+  <form id="addForm" autocomplete="off">
+    <input name="name" placeholder="Name" required />
+    <input name="address" placeholder="Adresse" required />
+    <button type="submit">Hinzufügen</button>
+  </form>
+
+  <ul id="list" aria-live="polite"></ul>
+</body>
+</html>

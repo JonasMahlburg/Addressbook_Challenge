@@ -1,0 +1,38 @@
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between
+}
+
+h1 {
+    margin: 0
+}
+
+form {
+    display: flex;
+    gap: .5rem;
+    margin-top: 1rem
+}
+
+input {
+    padding: .4rem .6rem;
+    font-size: 1rem
+}
+
+button {
+    padding: .4rem .6rem
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 1rem
+}
+
+li {
+    padding: .4rem .6rem;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center
+}
