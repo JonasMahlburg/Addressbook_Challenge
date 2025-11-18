@@ -1,3 +1,10 @@
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
 header {
     display: flex;
     align-items: center;
@@ -41,6 +48,7 @@ li {
     justify-content: space-between;
     align-items: center
 }
+
 
 .ab-modal-backdrop{
   position:fixed;
