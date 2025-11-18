@@ -1,6 +1,5 @@
 import json
 import os
-import mimetypes
 from http.server import HTTPServer, BaseHTTPRequestHandler
 from urllib.parse import urlparse, unquote
 
@@ -65,11 +64,23 @@ class RequestHandler(BaseHTTPRequestHandler):
                 return
 
         if os.path.isfile(file_path):
-            ctype, _ = mimetypes.guess_type(file_path)
-            ctype = ctype or "application/octet-stream"
             with open(file_path, "rb") as f:
                 data = f.read()
-            self._send(200, data, f"{ctype}; charset=utf-8")
+            
+            # Content-Type basierend auf Dateiendung
+            ext = os.path.splitext(file_path)[1].lower()
+            content_types = {
+                ".html": "text/html; charset=utf-8",
+                ".css": "text/css; charset=utf-8",
+                ".js": "text/javascript; charset=utf-8",
+                ".json": "application/json; charset=utf-8",
+                ".png": "image/png",
+                ".jpg": "image/jpeg",
+                ".gif": "image/gif",
+            }
+            content_type = content_types.get(ext, "application/octet-stream")
+            
+            self._send(200, data, content_type)
         else:
             self._send(404, b"Not Found")
 
