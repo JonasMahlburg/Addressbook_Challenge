@@ -67,16 +67,12 @@ class RequestHandler(BaseHTTPRequestHandler):
             with open(file_path, "rb") as f:
                 data = f.read()
             
-            # Content-Type basierend auf Dateiendung
             ext = os.path.splitext(file_path)[1].lower()
             content_types = {
                 ".html": "text/html; charset=utf-8",
                 ".css": "text/css; charset=utf-8",
                 ".js": "text/javascript; charset=utf-8",
                 ".json": "application/json; charset=utf-8",
-                ".png": "image/png",
-                ".jpg": "image/jpeg",
-                ".gif": "image/gif",
             }
             content_type = content_types.get(ext, "application/octet-stream")
             
