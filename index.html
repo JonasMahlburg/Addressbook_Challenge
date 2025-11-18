@@ -14,10 +14,21 @@
   </header>
 
   <form id="addForm" autocomplete="off">
-    <input name="name" placeholder="Name" required />
-    <input name="address" placeholder="Adresse" required />
+    <input name="firstname" placeholder="Vorname *" required />
+    <input name="name" placeholder="Name *" required />
+    <input name="street" placeholder="Straße *" required />
+    <input name="street_nr" placeholder="Nr. *" required />
+    <input name="plz" placeholder="PLZ *" required />
+    <input name="city" placeholder="Ort *" required />
+    <input name="phone" placeholder="Telefon" />
+    <input name="mobile" placeholder="Mobil" />
+    <input name="email" placeholder="Email" type="email" />
+    <input name="whatsapp" placeholder="Whatsapp" />
+    <input name="internet" placeholder="Internet" type="url" />
+
     <button type="submit">Hinzufügen</button>
   </form>
+  <p>Die mit (*) gekennzeichneten Felder sind Pflichtfeldere</p>
 
   <ul id="list" aria-live="polite"></ul>
 </body>

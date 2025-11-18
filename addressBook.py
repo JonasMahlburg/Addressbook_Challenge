@@ -13,8 +13,32 @@ if os.path.isfile(DATA_FILE):
         Adressen = {}
 else:
     Adressen = {
-        "Jonas Mahlburg": "Meudonstr 14, Celle",
-        "HM Software": "Rampenweg 1b, Adelheidsdorf"
+        "Jonas Mahlburg": {
+            "firstname": "Jonas",
+            "name": "Mahlburg",
+            "street": "Meudonstr",
+            "street_nr": "14",
+            "plz": "29221",
+            "city": "Celle",
+            "phone": "",
+            "mobile": "",
+            "email": "",
+            "whatsapp": "",
+            "internet": ""
+        },
+        "HM Software": {
+            "firstname": "HM",
+            "name": "Software",
+            "street": "Rampenweg",
+            "street_nr": "1b",
+            "plz": "",
+            "city": "Adelheidsdorf",
+            "phone": "",
+            "mobile": "",
+            "email": "",
+            "whatsapp": "",
+            "internet": ""
+        }
     }
 
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -91,13 +115,28 @@ class RequestHandler(BaseHTTPRequestHandler):
             body = self.rfile.read(length)
             data = json.loads(body.decode("utf-8"))
             name = data.get("name")
-            address = data.get("address")
-            if not name or not address:
+            firstname = data.get("firstname")
+            if not name or not firstname:
                 raise ValueError("Missing fields")
-            if name in Adressen:
+            key = f"{firstname} {name}"
+            if key in Adressen:
                 self._send(409, b"Conflict: entry exists")
                 return
-            Adressen[name] = address
+            # store entire object (keep all provided fields)
+            entry = {
+                "firstname": firstname,
+                "name": name,
+                "street": data.get("street",""),
+                "street_nr": data.get("street_nr",""),
+                "plz": data.get("plz",""),
+                "city": data.get("city",""),
+                "phone": data.get("phone",""),
+                "mobile": data.get("mobile",""),
+                "email": data.get("email",""),
+                "whatsapp": data.get("whatsapp",""),
+                "internet": data.get("internet","")
+            }
+            Adressen[key] = entry
             save_data()
             self._send_json(201, {"message": "created"})
         except Exception:
@@ -109,18 +148,31 @@ class RequestHandler(BaseHTTPRequestHandler):
         if not path.startswith("/api/addresses/"):
             self._send(404, b"Not Found")
             return
-        name = unquote(path[len("/api/addresses/"):])
+        key = unquote(path[len("/api/addresses/"):])
+        if key not in Adressen:
+            self._send(404, b"Not Found")
+            return
         length = int(self.headers.get("Content-Length", 0))
         body = self.rfile.read(length)
         try:
             data = json.loads(body.decode("utf-8"))
-            address = data.get("address")
-            if name not in Adressen:
-                self._send(404, b"Not Found")
-                return
-            if not address:
-                raise ValueError("Missing address")
-            Adressen[name] = address
+            # require at least firstname and name in body
+            if not data.get("firstname") or not data.get("name"):
+                raise ValueError("Missing fields")
+            entry = {
+                "firstname": data.get("firstname",""),
+                "name": data.get("name",""),
+                "street": data.get("street",""),
+                "street_nr": data.get("street_nr",""),
+                "plz": data.get("plz",""),
+                "city": data.get("city",""),
+                "phone": data.get("phone",""),
+                "mobile": data.get("mobile",""),
+                "email": data.get("email",""),
+                "whatsapp": data.get("whatsapp",""),
+                "internet": data.get("internet","")
+            }
+            Adressen[key] = entry
             save_data()
             self._send_json(200, {"message": "updated"})
         except Exception:
@@ -132,11 +184,11 @@ class RequestHandler(BaseHTTPRequestHandler):
         if not path.startswith("/api/addresses/"):
             self._send(404, b"Not Found")
             return
-        name = unquote(path[len("/api/addresses/"):])
-        if name not in Adressen:
+        key = unquote(path[len("/api/addresses/"):])
+        if key not in Adressen:
             self._send(404, b"Not Found")
             return
-        del Adressen[name]
+        del Adressen[key]
         save_data()
         self._send_json(200, {"message": "deleted"})
 

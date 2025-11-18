@@ -1,4 +1,28 @@
 {
-  "Jonas Mahlburg": "Meudonstr 14, Celle",
-  "HM Software": "Rampenweg 1b, Adelheidsdorf"
+  "Jonas Mahlburg": {
+    "firstname": "Jonas",
+    "name": "Mahlburg",
+    "street": "Meudonstr",
+    "street_nr": "14",
+    "plz": "29221",
+    "city": "Celle",
+    "phone": "05141",
+    "mobile": "0176-46703864",
+    "email": "mail@jonas-mahlburg.de",
+    "whatsapp": "0176-46703864",
+    "internet": "https://jonas-mahlburg.de"
+  },
+  "HM Software": {
+    "firstname": "HM",
+    "name": "Software",
+    "street": "Rampenweg",
+    "street_nr": "1b",
+    "plz": "",
+    "city": "Adelheidsdorf",
+    "phone": "",
+    "mobile": "",
+    "email": "",
+    "whatsapp": "",
+    "internet": ""
+  }
 }
