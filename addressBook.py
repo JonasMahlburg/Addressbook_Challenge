@@ -120,9 +120,9 @@ class RequestHandler(BaseHTTPRequestHandler):
                 raise ValueError("Missing fields")
             key = f"{firstname} {name}"
             if key in Adressen:
-                self._send(409, b"Conflict: entry exists")
+                self._send_json(409, {"error": "Conflict: entry exists"})
                 return
-            # store entire object (keep all provided fields)
+        
             entry = {
                 "firstname": firstname,
                 "name": name,
@@ -139,8 +139,8 @@ class RequestHandler(BaseHTTPRequestHandler):
             Adressen[key] = entry
             save_data()
             self._send_json(201, {"message": "created"})
-        except Exception:
-            self._send(400, b"Bad Request")
+        except Exception as e:
+            self._send_json(400, {"error": "Bad Request", "details": str(e)})
 
     def do_PUT(self):
         parsed = urlparse(self.path)
@@ -156,7 +156,6 @@ class RequestHandler(BaseHTTPRequestHandler):
         body = self.rfile.read(length)
         try:
             data = json.loads(body.decode("utf-8"))
-            # require at least firstname and name in body
             if not data.get("firstname") or not data.get("name"):
                 raise ValueError("Missing fields")
             entry = {

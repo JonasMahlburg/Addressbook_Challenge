@@ -4,14 +4,16 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Adressbuch</title>
-<link rel="stylesheet" href="style.css">
-<script src="script.js"></script>
+  <link href="https://unpkg.com/tabulator-tables@6.2.0/dist/css/tabulator_modern.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+  <script type="text/javascript" src="https://unpkg.com/tabulator-tables@6.2.0/dist/js/tabulator.min.js"></script>
+  <script src="script.js"></script>
 </head>
-<body onload="loadAddresses()">
-  <header>
-    <h1>Adressbuch</h1>
-    <small id="status">lade…</small>
+<body> <header>
+    <h1>Adressbuch</h1><br>
   </header>
+  <small id="status">lade…</small>
 
   <form id="addForm" autocomplete="off">
     <input name="firstname" placeholder="Vorname *" required />
@@ -28,8 +30,18 @@
 
     <button type="submit">Hinzufügen</button>
   </form>
-  <p>Die mit (*) gekennzeichneten Felder sind Pflichtfeldere</p>
+  <p>Die mit (*) gekennzeichneten Felder sind Pflichtfelder</p>
 
-  <ul id="list" aria-live="polite"></ul>
+  <section id="import-section">
+    <h2>Excel-Import</h2>
+    <input type="file" id="excel-file-input" accept=".xlsx, .xls, .csv">
+    <button id="import-btn">Adressen importieren</button>
+    <div id="import-message" style="margin-top: 5px; font-style: italic;"></div>
+  </section>
+  
+  <hr>
+
+  <div id="address-table"></div>
+  
 </body>
 </html>
