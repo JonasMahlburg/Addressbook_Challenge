@@ -21,7 +21,7 @@ Kleiner lokaler HTTP-API-Server für ein Adressbuch (keine externen Frameworks).
 ## Server starten
 1. Terminal öffnen und in das Projektverzeichnis wechseln:
    ```bash
-   cd /Users/jonas/Projekte/Adressbook_Challenge_Jonas_Mahlburg
+   cd /Adressbook_Challenge_Jonas_Mahlburg
    ```
 2. Server starten:
    ```bash
